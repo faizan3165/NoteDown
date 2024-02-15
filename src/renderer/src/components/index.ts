@@ -11,6 +11,9 @@ import ActionButtons from "./Button/ActionButtons";
 import List from "./Notes/List";
 import Preview from "./Notes/Preview";
 
+import Markdown from "./Editor/Markdown";
+import NoteTitle from "./Editor/NoteTitle";
+
 export {
   RootLayout,
   Sidebar,
@@ -22,4 +25,6 @@ export {
   ActionButtons,
   List,
   Preview,
+  Markdown,
+  NoteTitle,
 };

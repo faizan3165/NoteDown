@@ -15,7 +15,7 @@ const List = ({ className, ...props }: ComponentProps<"ul">) => {
   }
 
   return (
-    <ul {...props}>
+    <ul className={className} {...props}>
       {dummyNotes?.map((note) => (
         <Preview key={`${note.title} ${note.editedAt}`} {...note} />
       ))}

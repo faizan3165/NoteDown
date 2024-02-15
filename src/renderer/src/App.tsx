@@ -5,6 +5,8 @@ import {
   Sidebar,
   RootLayout,
   List,
+  Markdown,
+  NoteTitle,
 } from "@/components";
 
 const App = () => {
@@ -12,7 +14,7 @@ const App = () => {
     <>
       <DraggableTopBar />
 
-      <RootLayout className="mt-8">
+      <RootLayout>
         <Sidebar className="p-2">
           <ActionButtons className="flex justify-between mt-1" />
 
@@ -20,7 +22,9 @@ const App = () => {
         </Sidebar>
 
         <Content className="border-l bg-zinc-900/50 border-l-white/20">
-          Content
+          <NoteTitle className="pt-2" />
+
+          <Markdown />
         </Content>
       </RootLayout>
     </>
