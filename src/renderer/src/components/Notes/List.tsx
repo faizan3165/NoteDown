@@ -1,12 +1,20 @@
 import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { Preview } from "@/components";
 
-import { dummyNotes } from "@renderer/store/mocks";
-import { twMerge } from "tailwind-merge";
+import { useNotesList } from "@renderer/hooks/useNotesList";
 
-const List = ({ className, ...props }: ComponentProps<"ul">) => {
-  if (dummyNotes.length === 0) {
+type ListProps = ComponentProps<"ul"> & {
+  onSelect: () => void;
+};
+
+const List = ({ className, onSelect, ...props }: ListProps) => {
+  const { notes, selectedNoteIndex, handleNoteSelect } = useNotesList({
+    onSelect,
+  });
+
+  if (notes?.length === 0) {
     return (
       <ul className={twMerge("text-center pt-4", className)} {...props}>
         <span>No Notes Yet...</span>
@@ -16,8 +24,13 @@ const List = ({ className, ...props }: ComponentProps<"ul">) => {
 
   return (
     <ul className={className} {...props}>
-      {dummyNotes?.map((note) => (
-        <Preview key={`${note.title} ${note.editedAt}`} {...note} />
+      {notes?.map((note, index) => (
+        <Preview
+          key={index}
+          isActive={selectedNoteIndex === index}
+          onClick={handleNoteSelect(index)}
+          {...note}
+        />
       ))}
     </ul>
   );

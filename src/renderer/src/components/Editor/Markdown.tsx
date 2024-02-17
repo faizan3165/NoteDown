@@ -6,10 +6,17 @@ import {
   quotePlugin,
 } from "@mdxeditor/editor";
 
+import { useMarkDownEditor } from "@renderer/hooks/useMarkdownEditor";
+
 const Markdown = () => {
+  const { selectedNote } = useMarkDownEditor();
+
+  if (!selectedNote) return null;
+
   return (
     <MDXEditor
-      markdown={"# Hello From MDX!!"}
+      key={selectedNote.title}
+      markdown={selectedNote.content}
       plugins={[
         headingsPlugin(),
         listsPlugin(),

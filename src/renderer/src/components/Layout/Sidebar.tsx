@@ -5,7 +5,7 @@ const Sidebar = ({ className, children, ...props }: ComponentProps<"aside">) => 
   return (
     <aside
       className={twMerge(
-        "w-[250px]  h-[100vh + 10px] overflow-auto",
+        "w-[250px]  h-[100vh + 10px] overflow-auto mt-4",
         className
       )}
       {...props}
