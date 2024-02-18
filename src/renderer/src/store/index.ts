@@ -1,13 +1,22 @@
 import { atom } from "jotai";
+import { unwrap } from "jotai/utils";
 
 import { NoteInfo } from "@shared/models";
-import { dummyNotes } from "@/store/mocks";
 
-export const notesAtom = atom<NoteInfo[]>(dummyNotes);
+const loadNotes = async () => {
+  const notes = await window.context.getNotes();
+
+  return notes.sort((a, b) => b.editedAt - a.editedAt);
+};
+const asyncNotesAtom = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotes());
+
+export const notesAtom = unwrap(asyncNotesAtom, (prev) => prev);
 export const selectedNoteIndexAtom = atom<number | null>(null);
 
 export const createNoteAtom = atom(null, (get, set) => {
   const notes = get(notesAtom);
+
+  if (!notes) return;
 
   const title = `Notes ${notes.length + 1}`;
 
@@ -28,7 +37,7 @@ export const selectedNoteAtom = atom((get) => {
   const notes = get(notesAtom);
   const selectNoteIndex = get(selectedNoteIndexAtom);
 
-  if (selectNoteIndex == null) return null;
+  if (selectNoteIndex == null || !notes) return null;
 
   const selectedNote = notes[selectNoteIndex];
 
@@ -42,7 +51,7 @@ export const deleteNoteAtom = atom(null, (get, set) => {
   const notes = get(notesAtom);
   const selectedNote = get(selectedNoteAtom);
 
-  if (!selectedNote) return;
+  if (!selectedNote || !notes) return;
 
   set(
     notesAtom,

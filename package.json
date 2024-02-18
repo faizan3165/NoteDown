@@ -24,6 +24,7 @@
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "@mdxeditor/editor": "^2.8.3",
+    "fs-extra": "^11.2.0",
     "jotai": "^2.6.4"
   },
   "devDependencies": {
@@ -38,6 +39,8 @@
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.35",
     "prettier": "^3.2.4",
     "react": "^18.2.0",

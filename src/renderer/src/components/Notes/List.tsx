@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
+import { isEmpty } from "lodash";
 
 import { Preview } from "@/components";
 
@@ -14,15 +15,11 @@ const List = ({ className, onSelect, ...props }: ListProps) => {
     onSelect,
   });
 
-  if (notes?.length === 0) {
-    return (
-      <ul className={twMerge("text-center pt-4", className)} {...props}>
-        <span>No Notes Yet...</span>
-      </ul>
-    );
-  }
-
-  return (
+  return isEmpty(notes) ? (
+    <ul className={twMerge("text-center pt-4", className)} {...props}>
+      <span>No Notes Yet...</span>
+    </ul>
+  ) : (
     <ul className={className} {...props}>
       {notes?.map((note, index) => (
         <Preview
