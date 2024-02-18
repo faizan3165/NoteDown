@@ -8,8 +8,8 @@ import { createNoteAtom } from "@renderer/store";
 const NewNote = ({ ...props }: ComponentProps<"button">) => {
   const createNote = useSetAtom(createNoteAtom);
 
-  const createNoteHandler = () => {
-    createNote();
+  const createNoteHandler = async () => {
+    await createNote();
   };
 
   return (

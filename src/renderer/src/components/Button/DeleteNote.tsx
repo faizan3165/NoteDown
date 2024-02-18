@@ -8,8 +8,8 @@ import { deleteNoteAtom } from "@renderer/store";
 const DeleteNote = ({ ...props }: ComponentProps<"button">) => {
   const deleteNote = useSetAtom(deleteNoteAtom);
 
-  const deleteNoteHandler = () => {
-    deleteNote();
+  const deleteNoteHandler = async () => {
+    await deleteNote();
   };
 
   return (
