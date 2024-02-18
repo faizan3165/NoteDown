@@ -8,6 +8,7 @@ const loadNotes = async () => {
 
   return notes.sort((a, b) => b.editedAt - a.editedAt);
 };
+
 const asyncNotesAtom = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotes());
 
 export const notesAtom = unwrap(asyncNotesAtom, (prev) => prev);
@@ -33,19 +34,31 @@ export const createNoteAtom = atom(null, (get, set) => {
   set(selectedNoteIndexAtom, 0);
 });
 
-export const selectedNoteAtom = atom((get) => {
+const asyncSelectedNoteAtom = atom(async (get) => {
   const notes = get(notesAtom);
-  const selectNoteIndex = get(selectedNoteIndexAtom);
+  const selectedNoteIndex = get(selectedNoteIndexAtom);
 
-  if (selectNoteIndex == null || !notes) return null;
+  if (selectedNoteIndex == null || !notes) return null;
 
-  const selectedNote = notes[selectNoteIndex];
+  const selectedNote = notes[selectedNoteIndex];
+
+  const noteContent = await window.context.readNote(selectedNote.title);
 
   return {
     ...selectedNote,
-    content: `Hello from note number ${selectNoteIndex}`,
+    content: noteContent,
   };
 });
+
+export const selectedNoteAtom = unwrap(
+  asyncSelectedNoteAtom,
+  (prev) =>
+    prev ?? {
+      title: "",
+      content: "",
+      lastEditTime: Date.now(),
+    }
+);
 
 export const deleteNoteAtom = atom(null, (get, set) => {
   const notes = get(notesAtom);

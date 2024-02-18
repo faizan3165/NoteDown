@@ -13,10 +13,12 @@ const Markdown = () => {
 
   if (!selectedNote) return null;
 
+  // if (!selectedNote.content) return selectedNote.title;
+
   return (
     <MDXEditor
-      key={selectedNote.title}
-      markdown={selectedNote.content}
+      key={selectedNote?.title}
+      markdown={selectedNote?.content}
       plugins={[
         headingsPlugin(),
         listsPlugin(),
